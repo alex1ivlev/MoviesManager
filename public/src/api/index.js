@@ -2,10 +2,16 @@ import axios from 'axios'
 
 export const api = axios.create({
     baseURL: 'http://localhost:8000/api',
-    headers: {
-        'Authorization': (localStorage.getItem('token') !== null) ? "Bearer " + localStorage.getItem('token') : null,
-    }
 })
+
+api.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('token');
+    if (token !== null ) {
+        config.headers.Authorization = "Bearer " + token;
+    }
+
+    return config;
+});
 
 export const login = payload => api.post(`/users/login`, payload)
 export const addMovie = payload => api.post(`/movies`, payload)
@@ -18,7 +24,7 @@ export const updateMemberById = (id, payload) => api.put(`/members/${id}`, paylo
 export const deleteMemberById = id => api.delete(`/members/${id}`)
 export const getMemberById = id => api.get(`/members/${id}`)
 export const addMember = payload => api.post(`/members`, payload)
-export const getMemberMovies = id => api.post(`/${id}/movies/${id}`)
+export const addMovieToMember = (member_id, movie_id) => api.post(`/members/${member_id}/movies/${movie_id}`)
 
 
 
@@ -33,7 +39,7 @@ const apis = {
     updateMemberById,
     deleteMemberById,
     addMember,
-    getMemberMovies
+    addMovieToMember
 }
 
 export default apis;

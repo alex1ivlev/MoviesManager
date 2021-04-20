@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -6,20 +6,22 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import api, {getMemberMovies} from '../../api'
-
+import api from '../../api'
+import Movie from "./Movie"
 import styled from 'styled-components'
+import MemberSubscriptions from "./MemberSubscriptions";
 
 //update button style
 const Edit = styled.div`
-    color: #ef9b0f;
-    cursor: pointer;
+  color: #ef9b0f;
+  cursor: pointer;
 `
 //delete button style
 const Delete = styled.div`
-    color: #ff0000;
-    cursor: pointer;
+  color: #ff0000;
+  cursor: pointer;
 `
+
 //update button BL
 
 class EditMember extends Component {
@@ -27,6 +29,7 @@ class EditMember extends Component {
         event.preventDefault()
         window.location.href = `/members/update/${this.props.id}`
     }
+
     render() {
         return <Edit onClick={this.editUser}>Edit</Edit>
     }
@@ -48,6 +51,7 @@ class DeleteMember extends Component {
 
         }
     }
+
     render() {
         return <Delete onClick={this.deleteUser}>Delete</Delete>
     }
@@ -60,19 +64,21 @@ class Members extends Component {
         super(props)
         this.state = {
             members: [],
+            notWatchedMovies: []
         }
     }
 
     componentDidMount = () => {
-        api.getAllMembers().then(members => {
+        api.getAllMembers().then(resp => {
             this.setState({
-                members: members.data,
+                members: resp.data,
             })
         })
     }
-    onDelete = (id) =>{
+
+    onDelete = (id) => {
         let members = this.state.members;
-        let index = members.findIndex(function(u){
+        let index = members.findIndex(function (u) {
             return u._id === id;
         })
         if (index !== -1) {
@@ -82,34 +88,40 @@ class Members extends Component {
             })
         }
     }
+    addMovieToMember = (movie_id, mem_id)=>{
+
+    }
 
     render() {
-        const { members} = this.state
+        const {members} = this.state
         {
             return (
                 <ul>
-                    {members.map(m => (
+                    {members.map(member => (
                         <Card>
                             <CardActionArea>
                                 <CardMedia/>
                                 <Typography variant="h3" component="h3">
-                                    Name : {m.name}
+                                    Name : {member.name}
                                 </Typography>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        <div> Email: {m.email}</div>
-                                        <div> City: {m.city}</div>
+                                        <div> Email: {member.email}</div>
+                                        <div> City: {member.city}</div>
                                     </Typography>
-                                    <div> Movies watched: {m.movies}</div>
+                                    <div> Movies watched: <br/>
+                                        <MemberSubscriptions member_movies={member.movies} member_id={member._id} />
+
+                                    </div>
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
                                 <Button size="small" color="primary">
-                                    <EditMember id={m._id} />
+                                    <EditMember id={member._id}/>
                                 </Button>
 
                                 <Button size="small" color="primary">
-                                    <DeleteMember id={m._id} onDelete={this.onDelete}/>
+                                    <DeleteMember id={member._id} onDelete={this.onDelete}/>
                                 </Button>
 
                             </CardActions>

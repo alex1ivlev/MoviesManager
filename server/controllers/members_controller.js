@@ -22,7 +22,7 @@ appRouter.route('/:id')
 
 //POST request to "Movies Watched"
 
-appRouter.route('/:id/movies/movie_id')
+appRouter.route('/:id/movies/:movie_id')
     .post(async function(req,resp)
     {
         let id = req.params.id;

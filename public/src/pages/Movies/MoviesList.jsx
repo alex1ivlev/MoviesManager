@@ -68,14 +68,14 @@ class MoviesList extends Component {
     }
 
     componentDidMount = () => {
-        api.getAllMovies().then(movies => {
+        api.getAllMovies().then(resp => {
             this.setState({
-                movies: movies.data,
+                movies: resp.data,
                 isLoading: false,
             })
         })
     }
-    onDelete = (id) =>{
+    onDeleteCall = (id) =>{
         let movies = this.state.movies;
         let index = movies.findIndex(function(o){
             return o._id === id;
@@ -126,7 +126,7 @@ class MoviesList extends Component {
                                 </Button>
 
                                 <Button size="small" color="primary">
-                                    <DeleteMovie id={m._id} onDelete={this.onDelete}/>
+                                    <DeleteMovie id={m._id} onDelete={this.onDeleteCall}/>
                                 </Button>
 
                             </CardActions>
