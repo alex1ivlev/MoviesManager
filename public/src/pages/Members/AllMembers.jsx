@@ -117,7 +117,7 @@ class Members extends Component {
                             </CardActionArea>
                             <CardActions>
                                 <Button size="small" color="primary">
-                                    <EditMember id={member._id}/>
+                                    <EditMember id={member._id} />
                                 </Button>
 
                                 <Button size="small" color="primary">

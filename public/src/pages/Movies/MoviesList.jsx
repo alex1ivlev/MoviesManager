@@ -23,14 +23,14 @@ const Delete = styled.div`
 //update button BL
 
 class UpdateMovie extends Component {
-    updateUser = event => {
+    updateMovie = event => {
         event.preventDefault()
 
         window.location.href = `/movies/update/${this.props.id}`
     }
 
     render() {
-        return <Update onClick={this.updateUser}>Update</Update>
+        return <Update onClick={this.updateMovie}>Update</Update>
     }
 }
 

@@ -11,6 +11,7 @@ import AddMember from "../pages/Members/AddMember";
 import {Home} from "../components";
 import Movies from "../components/Movies";
 import Subscriptions from "../components/Subscriptions";
+import EditMember from "../pages/Members/EditMember";
 
 const isLoggedIn = () => {
     if(localStorage.getItem('token') != null){
@@ -52,6 +53,11 @@ function App() {
                 <PrivateRoute path="/subscriptions" exact component={Subscriptions} />
                 <PrivateRoute path="/members/list" exact component={AllMembers} />
                 <PrivateRoute path="/members/create" exact component={AddMember} />
+                <PrivateRoute
+                    path="/members/update/:id"
+                    exact
+                    component={EditMember}
+                />
 
             </Switch>
         </Router>
