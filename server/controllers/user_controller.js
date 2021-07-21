@@ -40,6 +40,7 @@ appRouter.route('/login')
     })
 
 
+// JWT secret is configurable via env var `JWT_SECRET`
 exports.authenticateMiddleware = function (req, resp, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
